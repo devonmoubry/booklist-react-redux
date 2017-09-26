@@ -1,8 +1,25 @@
+//react imports
 import React from "react";
 import ReactDOM from "react-dom";
 import "./styles/index.css";
-import App from "./components/App";
-import registerServiceWorker from "./registerServiceWorker";
+//redux imports
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import reducers from "./reducers";
+//import promise from 'redux-promise';
+//react router imports
+// import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-ReactDOM.render(<App />, document.getElementById("root"));
-registerServiceWorker();
+//components
+import App from "./components/App";
+
+const createStoreWithMiddleware = applyMiddleware()(createStore);
+
+//switch uses most specific route that matches, top down.
+
+ReactDOM.render(
+  <Provider store={createStoreWithMiddleware(reducers)}>
+    <App />
+  </Provider>,
+  document.querySelector(".container")
+);
